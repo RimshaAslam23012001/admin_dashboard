@@ -1,103 +1,79 @@
-const orderSchema = {
-    name: 'order',
-    type: 'document',
-    title: 'Order',
-    fields: [
+
+export default {
+    name : 'order',
+    type : 'document',
+    title : 'Order',
+    fields : [
         {
-            name: 'firstName',
-            type: 'string',
-            title: 'First Name',
+            name : 'firstName',
+            title : 'First Name',
+            type :'string'
         },
         {
-            name: 'lastName',
-            type: 'string',
-            title: 'Last Name',
+            name : 'lastName',
+            title : 'Last Name',
+            type :'string'
         },
         {
-            name: 'email',
-            type: 'string',
-            title: 'Email',
+            name : 'address',
+            title : 'Address',
+            type :'string'
         },
         {
-            name: 'phone',
-            type: 'string',
-            title: 'Phone Number',
+            name : 'city',
+            title : 'City',
+            type :'string'
         },
         {
-            name: 'address',
-            type: 'string',
-            title: 'Address',
+            name : 'zipCode',
+            title : 'Zip Code',
+            type :'string'
         },
         {
-            name: 'city',
-            type: 'string',
-            title: 'City',
+            name : 'phone',
+            title : 'Phone',
+            type :'string'
         },
         {
-            name: 'zipcode',
-            type: 'string',
-            title: 'Zip Code',
+            name : 'email',
+            title : 'Email',
+            type :'string'
+        },
+        
+        {
+          name: 'orderItems',
+          type: 'array',
+          title: 'Order Items',
+          of: [
+            {
+              type: 'reference',
+              to: [{ type: 'food' }]  // Reference to the 'food' schema
+            }
+          ],
+          description: 'Items ordered by the customer',
+          validation: (Rule:any) => Rule.required().min(1),  // Ensures at least one item is in the order
+        },
+        
+        
+        
+        {
+            name : 'total',
+            title : 'Total',
+            type : 'number'
         },
         {
-            name: 'orderItems',
-            type: 'array',
-            title: 'Order Items',
-            of: [
-                {
-                    type: 'reference', // Reference to 'food' schema
-                    to: [{ type: 'food' }]
-                }
-            ],
-            description: 'Items ordered by the customer'
-        },
-        {
-            name: 'total',
-            type: 'number',
-            title: 'Total',
-            description: 'Total cost of the order'
-        },
-        {
-            name: 'status',
-            type: 'string',
-            title: 'Status',
-            options: {
-                list: [
-                    { title: 'Pending', value: 'pending' },
-                    { title: 'Processing', value: 'processing' },
-                    { title: 'Completed', value: 'completed' },
-                    { title: 'Cancelled', value: 'cancelled' }
+            name : 'status',
+            title : 'Order Status',
+            type :'string',
+            options : {
+                list : [
+                    { title : 'Pending', value : 'pending' },
+                    { title : 'Success', value :'success' },
+                    { title : 'Dispatch', value : 'dispatch' },
                 ],
-                layout: 'radio'
+                layout : 'radio' // Optionally, change to 'dropdown' if you prefer a dropdown
             },
-            initialValue: 'pending'
-        },
-        {
-            name: 'orderDate',
-            type: 'datetime',
-            title: 'Order Date',
-            description: 'Date when the order was placed'
-        },
-        {
-            name: 'paymentStatus',
-            type: 'string',
-            title: 'Payment Status',
-            options: {
-                list: [
-                    { title: 'Paid', value: 'paid' },
-                    { title: 'Unpaid', value: 'unpaid' },
-                    { title: 'Pending', value: 'pending' }
-                ],
-                layout: 'radio'
-            },
-            initialValue: 'unpaid'
-        },
-        {
-            name: 'orderNotes',
-            type: 'text',
-            title: 'Order Notes',
-            description: 'Any special instructions for the order'
+            initialValue : 'pending' // Default value
         }
     ]
-};
-
-export default orderSchema;
+  }
